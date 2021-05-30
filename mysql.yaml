@@ -1,0 +1,62 @@
+---
+  
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysql
+spec:
+  type: ClusterIP
+  ports:
+  - port: 3306
+  selector:
+    app: mysql
+    
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: mysql
+automountServiceAccountToken: true
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mysql
+spec:
+  selector:
+    matchLabels:
+      app: mysql
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        service: mysql
+        app: mysql
+      annotations:
+        # consul.hashicorp.com/connect-inject: "true"
+    spec:
+      serviceAccountName: mysql
+      containers:
+      - image: mysql:latest
+        name: mysql
+        env:
+          # Use secret in real usage
+        - name: MYSQL_ROOT_PASSWORD
+          value: vaultadminpassword
+        - name: MYSQL_DATABASE
+          value: "app"
+        - name: MYSQL_USER
+          value: "vaultadmin"
+        - name: MYSQL_PASSWORD
+          value: "vaultadminpassword"
+        ports:
+        - containerPort: 3306
+          name: mysql
+        volumeMounts:
+        - name: k8s-mysql-storage
+          mountPath: /var/lib/mysql
+      volumes:
+      - name: k8s-mysql-storage
+        emptyDir: {}
