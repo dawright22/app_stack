@@ -12,8 +12,8 @@ fi
 
 sleep 2
 
-ROOT_TOKEN=$(jq -r '.root_token'  init.json)
-UNSEAL_KEY=$(jq -r '.unseal_keys_b64[0]' init.json)
+export ROOT_TOKEN=$(jq -r '.root_token'  init.json)
+export UNSEAL_KEY=$(jq -r '.unseal_keys_b64[0]' init.json)
 
 
 sleep 1
