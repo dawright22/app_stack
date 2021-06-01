@@ -22,22 +22,7 @@ sleep 1
 kubectl exec -it vault-0 -- vault operator unseal $UNSEAL_KEY
 sleep 10
 
-kubectl exec -ti vault-1 -- vault operator raft join http://vault-0.vault-internal:8200
-sleep 10
-
-kubectl exec -ti vault-1 -- vault operator unseal $UNSEAL_KEY
-sleep 10
-
-kubectl exec -ti vault-2 -- vault operator raft join http://vault-0.vault-internal:8200
-sleep 10
-
-kubectl exec -ti vault-2 -- vault operator unseal $UNSEAL_KEY
-
-sleep 1
-
 kubectl exec -it vault-0 -- vault login $ROOT_TOKEN
-
-kubectl exec -ti vault-0 -- vault operator raft list-peers
 
 #################################
 # Transit-app-example Vault setup
