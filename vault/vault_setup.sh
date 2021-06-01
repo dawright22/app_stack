@@ -33,7 +33,7 @@ kubectl exec -it vault-0 -- vault secrets enable -path=lob_a/workshop/database d
 kubectl exec -it vault-0 -- vault secrets enable -path=lob_a/workshop/kv kv
 kubectl exec -it vault-0 -- vault write lob_a/workshop/kv/transit-app-example username=vaultadmin password=vaultadminpassword
 
-sleep 10
+sleep 30
 
 kubectl exec -it vault-0 -- vault write lob_a/workshop/database/config/ws-mysql-database \
     plugin_name=mysql-database-plugin \
