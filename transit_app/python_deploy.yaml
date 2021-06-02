@@ -21,7 +21,6 @@ spec:
     metadata: 
       annotations:
         vault.hashicorp.com/role: "workshop-app"
-#         vault.hashicorp.com/agent-inject: "true"
         vault.hashicorp.com/agent-inject-status: "update"
         vault.hashicorp.com/agent-inject-secret-db-creds: "lob_a/workshop/database/roles/workshop-app"
         vault.hashicorp.com/agent-inject-secret-config.ini: "lob_a/workshop/database/roles/workshop-app"
