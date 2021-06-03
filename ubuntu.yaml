@@ -1,0 +1,42 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: ubuntu
+automountServiceAccountToken: true
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ubuntu
+  name: ubuntu
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: ubuntu
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: ubuntu
+      annotations:
+        # consul.hashicorp.com/connect-inject: "true"  
+        # consul.hashicorp.com/transparent-proxy: "false"
+        # consul.hashicorp.com/connect-service-upstreams: "mysql:3306:azure"
+    spec:
+      serviceAccountName: ubuntu
+      containers:
+      - image: ubuntu
+        name: ubuntu
+        command: ["/bin/sleep", "3650d"]
+        resources: {}
+
+#kubectl exec -i -t ubuntu- --container ubuntu -- /bin/bash
+#apt update
+#apt install curl
+#apt install j
+#apt install mysql-client
